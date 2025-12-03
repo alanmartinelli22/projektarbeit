@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { Header } from "./Header";
+import { Start } from "./Start";
+import { Fokusfrage } from "./Fokusfrage";
+import { Explore } from "./Explore";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [page, setPage] = useState("start"); // "start" | "fokusfrage" | "explore"
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="app">
+      {/* Header con titolo + bottoni di navigazione */}
+      <Header page={page} setPage={setPage} />
+
+      {/* Contenuto che cambia in base a page */}
+      <div className="mainArea">
+        {page === "start" && <Start />}
+        {page === "fokusfrage" && <Fokusfrage />}
+        {page === "explore" && <Explore />}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
