@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import { Map } from "./Map";
 
 export const Start = () => {
   return (
@@ -50,6 +51,8 @@ export const Start = () => {
           </ListItem>
         </List>
       </Paper>
+
+      <Map />
     </Box>
   );
 };
