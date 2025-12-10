@@ -1,0 +1,57 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Wann gibt es an der Bahnhofstrasse Nord mehr Erwachsene in LTR als RTL?",
+  "data": {
+    "name": "table"
+  },
+  "transform": [
+    {
+      "filter": "datum.location_id == 331"
+    },
+    {
+      "calculate": "datum.adult_ltr_pedestrians_count - datum.adult_rtl_pedestrians_count",
+      "as": "delta"
+    }
+  ],
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "timestamp",
+      "type": "temporal",
+      "title": "Zeit"
+    },
+    "y": {
+      "field": "delta",
+      "type": "quantitative",
+      "title": "Differenz LTR meno RTL"
+    },
+    "color": {
+      "condition": {
+        "test": "datum.delta > 0",
+        "value": "#1a9850"
+      },
+      "value": "#d73027"
+    },
+    "tooltip": [
+      { "field": "timestamp", "type": "temporal", "title": "Zeit" },
+      {
+        "field": "adult_ltr_pedestrians_count",
+        "type": "quantitative",
+        "title": "LTR Erwachsene"
+      },
+      {
+        "field": "adult_rtl_pedestrians_count",
+        "type": "quantitative",
+        "title": "RTL Erwachsene"
+      },
+      {
+        "field": "delta",
+        "type": "quantitative",
+        "title": "Differenz LTR meno RTL"
+      }
+    ]
+  },
+  "config": {
+    "view": { "continuousWidth": 500, "continuousHeight": 400 }
+  }
+}

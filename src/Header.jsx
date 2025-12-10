@@ -1,7 +1,7 @@
 import { Box, Stack, Typography, ButtonGroup, Button } from "@mui/material";
+import logo from "./assets/fhnw_logo.png"; // <-- importa il logo
 
 export const Header = ({ page, setPage }) => {
-  // lista pagine → generiamo i bottoni dinamicamente
   const pages = [
     { key: "start", label: "Einführung" },
     { key: "fokusfrage", label: "Fokusfrage" },
@@ -10,27 +10,34 @@ export const Header = ({ page, setPage }) => {
 
   return (
     <Box
+      className="header"
       sx={{
-        backgroundColor: "#eee333", // giallo FHNW
+        backgroundColor: "#eee333",
         color: "black",
         borderBottom: "4px solid black",
-        pb: 1,
+        py: 1,
+        px: 2,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 2,
       }}
     >
-      {/* TITOLO */}
-      <Typography
-        variant="h5"
-        sx={{
-          textAlign: "center",
-          fontWeight: 700,
-          py: 1,
-        }}
-      >
-        Passantenfrequenzen Bahnhofstrasse – Projektarbeit FHNW
-      </Typography>
+      {/* LOGO + TITOLO */}
+      <Box sx={{ display: "flex", alignItems: "center", gap: 5 }}>
+        <img
+          src={logo}
+          alt="FHNW Logo"
+          style={{ height: "50px", objectFit: "contain" }}
+        />
+
+        <Typography variant="h5" sx={{ fontWeight: 700, whiteSpace: "nowrap" }}>
+          Passantenfrequenzen Bahnhofstrasse – Projektarbeit FHNW
+        </Typography>
+      </Box>
 
       {/* BOTTONI DINAMICI */}
-      <Stack direction="row" justifyContent="center" alignItems="center">
+      <Stack direction="row" alignItems="center">
         <ButtonGroup>
           {pages.map((p) => (
             <Button
