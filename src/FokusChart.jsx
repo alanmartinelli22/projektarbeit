@@ -9,11 +9,7 @@ import fokusfrage from "./json_spec/fokusfrage.json";
 export const FokusChart = () => {
   return (
     <Box>
-      <Paper sx={{ p: 2, backgroundColor: "#111", color: "white" }}>
-        <Typography variant="body1" gutterBottom>
-          Diagramm zur Fokusfrage
-        </Typography>
-
+      <Paper sx={{ p: 2, backgroundColor: "white", color: "white" }}>
         {/* Qui disegniamo il grafico */}
         <VegaEmbed spec={fokusfrage} />
       </Paper>
