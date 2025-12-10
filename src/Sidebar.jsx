@@ -1,6 +1,4 @@
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -46,54 +44,42 @@ export const Sidebar = ({
   setWeather,
 }) => {
   return (
-    <Paper sx={{ p: 2 }}>
+    <div>
       <Typography variant="h6" gutterBottom>
         Filter
       </Typography>
 
-      {/* Data e location */}
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: { xs: "1fr", md: "1fr" },
-          gap: 2,
-        }}
-      >
-        <FormControl fullWidth>
-          <TextField
-            label="Datum"
-            type="date"
-            slotProps={{
-              inputLabel: {
-                shrink: true,
-              },
-            }}
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </FormControl>
+      <FormControl fullWidth sx={{ mb: 2 }}>
+        <TextField
+          label="Datum"
+          type="date"
+          slotProps={{
+            inputLabel: { shrink: true },
+          }}
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+      </FormControl>
 
-        <FormControl fullWidth>
-          <InputLabel id="location-label">Standort</InputLabel>
-          <Select
-            labelId="location-label"
-            label="Standort"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          >
-            {locationOptions.map((opt) => (
-              <MenuItem key={opt.value} value={opt.value}>
-                {opt.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
+      <FormControl fullWidth sx={{ mb: 2 }}>
+        <InputLabel id="location-label">Standort</InputLabel>
+        <Select
+          labelId="location-label"
+          label="Standort"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        >
+          {locationOptions.map((opt) => (
+            <MenuItem key={opt.value} value={opt.value}>
+              {opt.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
       <Divider sx={{ my: 2 }} />
 
-      {/* Persone */}
-      <FormGroup sx={{ mb: 1 }}>
+      <FormGroup sx={{ mb: 2 }}>
         <Typography variant="subtitle1">Personen</Typography>
         <FormControlLabel
           control={
@@ -115,7 +101,6 @@ export const Sidebar = ({
         />
       </FormGroup>
 
-      {/* Direzione */}
       <FormGroup sx={{ mb: 2 }}>
         <Typography variant="subtitle1">Richtung</Typography>
         <FormControlLabel
@@ -140,7 +125,6 @@ export const Sidebar = ({
 
       <Divider sx={{ my: 2 }} />
 
-      {/* Meteo */}
       <FormControl fullWidth>
         <InputLabel id="weather-label">Wetter</InputLabel>
         <Select
@@ -156,6 +140,6 @@ export const Sidebar = ({
           ))}
         </Select>
       </FormControl>
-    </Paper>
+    </div>
   );
 };

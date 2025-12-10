@@ -1,5 +1,3 @@
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -8,12 +6,16 @@ import { Map } from "./Map";
 
 export const Start = () => {
   return (
-    <Box sx={{ p: 3 }}>
-      <Paper sx={{ p: 3 }}>
+    <div className="page">
+      {/* Titolo */}
+      <div className="pageTitle">
         <Typography variant="h4" gutterBottom>
           Einführung
         </Typography>
+      </div>
 
+      {/* Testo introduttivo */}
+      <div className="pageIntro">
         <Typography variant="body1" paragraph>
           In diesem Projekt analysieren wir die Passantenfrequenzen an der
           Zürcher Bahnhofstrasse. Die Daten stammen von Hystreet und enthalten
@@ -26,10 +28,12 @@ export const Start = () => {
           eine einfache, interaktive Exploration der Daten zu ermöglichen.
         </Typography>
 
+        {/* Abschnitt Titel */}
         <Typography variant="h6" gutterBottom>
           Aufbau der Anwendung
         </Typography>
 
+        {/* Liste */}
         <List dense>
           <ListItem>
             <ListItemText
@@ -37,12 +41,14 @@ export const Start = () => {
               secondary="Beschreibung des Datensatzes und des Projektziels. Später ergänzen wir hier auch eine Übersichtskarte der Messstandorte."
             />
           </ListItem>
+
           <ListItem>
             <ListItemText
               primary="Fokusfrage"
               secondary='Visualisierung, die beantwortet: "Wann gibt es an der Bahnhofstrasse Nord mehr erwachsene Fussgänger in Richtung LTR als RTL?"'
             />
           </ListItem>
+
           <ListItem>
             <ListItemText
               primary="Explore"
@@ -50,9 +56,12 @@ export const Start = () => {
             />
           </ListItem>
         </List>
-      </Paper>
+      </div>
 
-      <Map />
-    </Box>
+      {/* Mappa */}
+      <div className="mapContainer">
+        <Map />
+      </div>
+    </div>
   );
 };

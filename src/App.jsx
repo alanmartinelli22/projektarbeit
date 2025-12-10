@@ -6,19 +6,19 @@ import { Explore } from "./Explore";
 import "./App.css";
 
 function App() {
-  const [page, setPage] = useState("start"); // "start" | "fokusfrage" | "explore"
+  const [page, setPage] = useState("start");
 
   return (
     <div className="app">
-      {/* Header con titolo + bottoni di navigazione */}
-      <Header page={page} setPage={setPage} />
+      <header className="header">
+        <Header page={page} setPage={setPage} />
+      </header>
 
-      {/* Contenuto che cambia in base a page */}
-      <div className="mainArea">
+      <main className="main">
         {page === "start" && <Start />}
         {page === "fokusfrage" && <Fokusfrage />}
         {page === "explore" && <Explore />}
-      </div>
+      </main>
     </div>
   );
 }

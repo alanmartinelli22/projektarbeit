@@ -1,12 +1,9 @@
 import { useState } from "react";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-
 import { Sidebar } from "./Sidebar";
 
 export const Explore = () => {
-  const [date, setDate] = useState(""); // yyyy mm dd
+  const [date, setDate] = useState("");
   const [location, setLocation] = useState("Bahnhofstrasse (Nord)");
   const [showAdults, setShowAdults] = useState(true);
   const [showChildren, setShowChildren] = useState(true);
@@ -29,68 +26,66 @@ export const Explore = () => {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Explore
-      </Typography>
+    <div className="page">
+      <div className="pageTitle">
+        <Typography variant="h4" gutterBottom>
+          Explore
+        </Typography>
+      </div>
 
-      <Typography variant="body1" sx={{ mb: 2 }}>
-        Interaktive Exploration der Fussgängerdaten. Links können Datum,
-        Standort, Personenart, Richtung und Wetterbedingungen gewählt werden.
-        Rechts aktualisiert sich das Diagramm entsprechend.
-      </Typography>
+      <div className="pageIntro">
+        <Typography variant="body1">
+          Interaktive Exploration der Fussgängerdaten. Links kannst du Datum,
+          Standort, Personenart, Richtung und Wetter wählen. Rechts wird später
+          das Diagramm mit den gefilterten Daten angezeigt.
+        </Typography>
+      </div>
 
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: { xs: "1fr", md: "280px 1fr" },
-          gap: 2,
-        }}
-      >
-        {/* Sidebar con i filtri */}
-        <Sidebar
-          date={date}
-          setDate={setDate}
-          location={location}
-          setLocation={setLocation}
-          showAdults={showAdults}
-          setShowAdults={setShowAdults}
-          showChildren={showChildren}
-          setShowChildren={setShowChildren}
-          showLTR={showLTR}
-          setShowLTR={setShowLTR}
-          showRTL={showRTL}
-          setShowRTL={setShowRTL}
-          weather={weather}
-          setWeather={setWeather}
-        />
+      <div className="exploreLayout">
+        {/* sidebar completa a sinistra */}
+        <div className="sidebarPanel">
+          <Sidebar
+            date={date}
+            setDate={setDate}
+            location={location}
+            setLocation={setLocation}
+            showAdults={showAdults}
+            setShowAdults={setShowAdults}
+            showChildren={showChildren}
+            setShowChildren={setShowChildren}
+            showLTR={showLTR}
+            setShowLTR={setShowLTR}
+            showRTL={showRTL}
+            setShowRTL={setShowRTL}
+            weather={weather}
+            setWeather={setWeather}
+          />
+        </div>
 
-        {/* Area del grafico di esplorazione */}
-        <Paper sx={{ p: 2 }}>
+        {/* grafico che riempie la parte destra */}
+        <div className="chartPanel">
           <Typography variant="h6" gutterBottom>
             Explorationsdiagramm
           </Typography>
-          <Typography variant="body2" sx={{ mb: 1 }}>
-            Hier kommt später die Visualisierung mit den gefilterten Daten.
+          <Typography variant="body2">
+            Hier kommt der Vega Lite Plot hin. Unten siehst du vorerst nur die
+            aktuell ausgewählten Filter.
           </Typography>
 
-          <Typography variant="subtitle2" sx={{ mb: 1 }}>
-            Aktuell ausgewählte Filter nur zur Kontrolle
-          </Typography>
-          <Box
-            component="pre"
-            sx={{
+          <pre
+            style={{
+              marginTop: 16,
+              padding: 8,
               backgroundColor: "#f5f5f5",
-              p: 1,
-              borderRadius: 1,
+              borderRadius: 4,
               fontSize: 12,
               overflowX: "auto",
             }}
           >
             {JSON.stringify(currentFilters, null, 2)}
-          </Box>
-        </Paper>
-      </Box>
-    </Box>
+          </pre>
+        </div>
+      </div>
+    </div>
   );
 };
