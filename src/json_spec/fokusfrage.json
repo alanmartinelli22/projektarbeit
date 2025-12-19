@@ -15,15 +15,19 @@
     "color": {
       "field": "winner",
       "legend": {
-        "orient": "top"
+        "direction": "horizontal",
+        "legendX": 380,
+        "legendY": -40,
+        "orient": "none",
+        "title": "Richtung",
+        "titleAnchor": "middle"
       },
       "scale": {
         "range": [
-          "#1a9850",
-          "#d73027"
+          "#4f8f4e",
+          "#c0392b"
         ]
       },
-      "title": "Wer ist gr\u00f6sser",
       "type": "nominal"
     },
     "tooltip": [
@@ -31,16 +35,6 @@
         "field": "hour",
         "title": "Stunde",
         "type": "ordinal"
-      },
-      {
-        "field": "adult_ltr_pedestrians_count",
-        "title": "LTR Erwachsene",
-        "type": "quantitative"
-      },
-      {
-        "field": "adult_rtl_pedestrians_count",
-        "title": "RTL Erwachsene",
-        "type": "quantitative"
       },
       {
         "field": "delta",
@@ -64,9 +58,8 @@
       "type": "quantitative"
     }
   },
-  "height": 350,
-  "title": "Wann gibt es an der Bahnhofstrasse Nord mehr Erwachsene in LTR als RTL?",
-  "width": 500,
+  "height": 500,
+  "width": 900,
   "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json",
   "datasets": {
     "data-820e2b2153a5e5be4581ab00760c0ea1": [

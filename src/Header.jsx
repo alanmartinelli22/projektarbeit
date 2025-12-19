@@ -1,6 +1,5 @@
 import { Box, Stack, Typography, ButtonGroup, Button } from "@mui/material";
-import logo from "./assets/fhnw_logo.png"; // <-- importa il logo
-
+import logo from "./assets/fhnw_logo.png";
 export const Header = ({ page, setPage }) => {
   const pages = [
     { key: "start", label: "Einführung" },
@@ -14,7 +13,6 @@ export const Header = ({ page, setPage }) => {
       sx={{
         backgroundColor: "#eee333",
         color: "black",
-        borderBottom: "4px solid black",
         py: 1,
         px: 2,
         display: "flex",

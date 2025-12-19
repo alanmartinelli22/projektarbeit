@@ -9,7 +9,6 @@ export const Explore = () => {
   const [showChildren, setShowChildren] = useState(true);
   const [showLTR, setShowLTR] = useState(true);
   const [showRTL, setShowRTL] = useState(true);
-  const [weather, setWeather] = useState("clear-day");
 
   const currentFilters = {
     date,
@@ -22,7 +21,6 @@ export const Explore = () => {
       LTR: showLTR,
       RTL: showRTL,
     },
-    weather,
   };
 
   return (
@@ -57,8 +55,6 @@ export const Explore = () => {
             setShowLTR={setShowLTR}
             showRTL={showRTL}
             setShowRTL={setShowRTL}
-            weather={weather}
-            setWeather={setWeather}
           />
         </div>
 
