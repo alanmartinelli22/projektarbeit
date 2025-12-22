@@ -59,7 +59,8 @@ Verwendete Technologien:
 - Uvicorn (ASGI Server)
 
 Der vollständige Datensatz (**Gesamtdatensatz.csv**) wird beim Start des Servers einmalig in ein Pandas DataFrame geladen.
-Das Frontend ruft ausschliesslich gefilterte oder aggregierte Daten ab, um eine gute Performance sicherzustellen.
+Das Frontend ruft ausschliesslich gefilterte oder aggregierte Daten ab.
+Die Aufbereitung der Daten für die Visualisierung erfolgt bewusst im Frontend.
 
 ---
 
@@ -139,7 +140,7 @@ Das Frontend läuft standardmässig auf `http://localhost:5173`.
 - Die Navigation erfolgt über den Header
 - Die Seite **Fokusfrage** beantwortet die definierte Fragestellung visuell
 - In der **Explore**-Ansicht können Filter verwendet werden, um Daten nach verschiedenen Kriterien zu untersuchen
-- Die Visualisierungen werden jeweils über das Backend neu berechnet
+- Die Visualisierungen werden im Frontend auf Basis der vom Backend gelieferten aggregierten Daten erstellt.
 
 ---
 
