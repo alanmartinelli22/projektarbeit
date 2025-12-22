@@ -5,7 +5,7 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 import altair as alt
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 BASE_DIR = Path(__file__).parent
@@ -15,21 +15,24 @@ app = FastAPI(title="Projektarbeit API")
 
 app.add_middleware(
     CORSMiddleware,
+    # Zugriff von React regeln
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# Zeitstempel in Datetime umwandeln
 DF = pd.read_csv(DATA_PATH)
 DF["timestamp"] = pd.to_datetime(DF["timestamp"])
 
 DF["date"] = DF["timestamp"].dt.date
 DF["hour"] = DF["timestamp"].dt.hour
 
+# leere Zellen ohne Werte im ganzen Datensatz in None umwandeln
 DF = DF.where(pd.notnull(DF), None)
 
 
-@app.get("/")
+# Endpunkte definieren@app.get("/")
 def root():
     return {"status": "ok", "rows": len(DF)}
 
@@ -45,6 +48,7 @@ def locations():
         return df_loc.to_dict(orient="records")
     return []
 
+#Richiesta per fokusfrage
 
 @app.get("/api/locations/{location_id}/focus")
 def focus(location_id: int):
@@ -72,6 +76,8 @@ def focus(location_id: int):
 
     return df_group.to_dict(orient="records")
 
+
+#Richiesta per explore
 
 @app.get("/api/explore/chart")
 def explore_chart(

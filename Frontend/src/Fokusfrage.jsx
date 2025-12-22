@@ -11,9 +11,10 @@ export const Fokusfrage = () => {
       </div>
 
       <div className="pageIntro">
-        <Typography variant="body1">
-          Wann gibt es an der Bahnhofstrasse Nord mehr erwachsene Fussgänger in
-          Richtung LTR als in Richtung RTL?
+        <Typography variant="h6">
+          Wann gibt es an der Bahnhofstrasse Nord während der Street Parade am
+          10. August 2024 mehr erwachsene Fussgänger in Richtung LTR als in
+          Richtung RTL?
         </Typography>
 
         <Typography variant="body2">
