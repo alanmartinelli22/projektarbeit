@@ -7,59 +7,60 @@ import { Map } from "./Map";
 export const Start = () => {
   return (
     <div className="page">
-      {/* Titolo */}
       <div className="pageTitle">
         <Typography variant="h4" gutterBottom>
           Einführung
         </Typography>
       </div>
 
-      {/* Testo introduttivo */}
       <div className="pageIntro">
         <Typography variant="body1" paragraph>
-          In diesem Projekt analysieren wir die Passantenfrequenzen an der
-          Zürcher Bahnhofstrasse. Die Daten stammen von Hystreet und enthalten
-          stündliche Zählungen von Fussgängerinnen und Fussgängern an
-          verschiedenen Messpunkten (z.B. Bahnhofstrasse Nord, Mitte, Süd).
+          Diese Webanwendung analysiert Passantenfrequenzen an der Zürcher
+          Bahnhofstrasse. Die Daten stammen von Hystreet und enthalten
+          stündliche Zählungen von Fussgängerinnen und Fussgängern an mehreren
+          Messstandorten (Bahnhofstrasse Nord, Mitte, Süd sowie
+          Lintheschergasse).
         </Typography>
 
         <Typography variant="body1" paragraph>
-          Ziel ist es, eine konkrete Fokusfrage zu beantworten und gleichzeitig
-          eine einfache, interaktive Exploration der Daten zu ermöglichen.
+          Ziel der Projektarbeit ist es, eine konkrete Fokusfrage mit einer
+          geeigneten Visualisierung zu beantworten und zusätzlich eine einfache,
+          interaktive Exploration des Datensatzes zu ermöglichen.
         </Typography>
 
-        {/* Abschnitt Titel */}
         <Typography variant="h6" gutterBottom>
-          Aufbau der Anwendung
+          Aufbau der Anwendung:
         </Typography>
 
-        {/* Liste */}
         <List dense>
-          <ListItem>
+          <ListItem alignItems="flex-start">
             <ListItemText
               primary="Einführung"
-              secondary="Beschreibung des Datensatzes und des Projektziels. Später ergänzen wir hier auch eine Übersichtskarte der Messstandorte."
+              secondary="Kurzbeschreibung des Datensatzes, der Projektziele und eine Übersichtskarte der Messstandorte."
             />
           </ListItem>
 
-          <ListItem>
+          <ListItem alignItems="flex-start">
             <ListItemText
               primary="Fokusfrage"
-              secondary='Visualisierung, die beantwortet: "Wann gibt es an der Bahnhofstrasse Nord mehr erwachsene Fussgänger in Richtung LTR als RTL?"'
+              secondary='Visualisierung zur Beantwortung der Frage: "Wann gibt es an der Bahnhofstrasse Nord mehr erwachsene Fussgänger in Richtung LTR als in Richtung RTL?"'
             />
           </ListItem>
 
-          <ListItem>
+          <ListItem alignItems="flex-start">
             <ListItemText
               primary="Explore"
-              secondary="Einfache explorative Ansicht, um weitere Orte, Variablen und Zeiträume interaktiv zu untersuchen."
+              secondary="Interaktive Ansicht mit Filtern (Datum, Standort, Personengruppe und Richtung), um Muster und Unterschiede im Datensatz zu untersuchen."
             />
           </ListItem>
         </List>
       </div>
 
-      {/* Mappa */}
       <div className="mapContainer">
+        <Typography variant="h6" paragraph>
+          Die Karte zeigt die verfügbaren Messstandorte:
+        </Typography>
+
         <Map />
       </div>
     </div>

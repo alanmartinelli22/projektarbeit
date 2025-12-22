@@ -12,19 +12,8 @@ import Divider from "@mui/material/Divider";
 const locationOptions = [
   { value: "Bahnhofstrasse (Nord)", label: "Bahnhofstrasse (Nord)" },
   { value: "Bahnhofstrasse (Mitte)", label: "Bahnhofstrasse (Mitte)" },
-  { value: "Bahnhofstrasse (Süd)", label: "Bahnhofstrasse (Sued)" },
+  { value: "Bahnhofstrasse (Süd)", label: "Bahnhofstrasse (Süd)" },
   { value: "Lintheschergasse", label: "Lintheschergasse" },
-];
-
-const weatherOptions = [
-  { value: "clear-night", label: "klar Nacht" },
-  { value: "partly-cloudy-night", label: "teilweise bewölkt Nacht" },
-  { value: "partly-cloudy-day", label: "teilweise bewölkt Tag" },
-  { value: "cloudy", label: "bewölkt" },
-  { value: "clear-day", label: "klar Tag" },
-  { value: "rain", label: "Regen" },
-  { value: "fog", label: "Nebel" },
-  { value: "snow", label: "Schnee" },
 ];
 
 export const Sidebar = ({
@@ -40,8 +29,6 @@ export const Sidebar = ({
   setShowLTR,
   showRTL,
   setShowRTL,
-  weather,
-  setWeather,
 }) => {
   return (
     <div>
@@ -122,24 +109,6 @@ export const Sidebar = ({
           label="RTL"
         />
       </FormGroup>
-
-      <Divider sx={{ my: 2 }} />
-
-      <FormControl fullWidth>
-        <InputLabel id="weather-label">Wetter</InputLabel>
-        <Select
-          labelId="weather-label"
-          label="Wetter"
-          value={weather}
-          onChange={(e) => setWeather(e.target.value)}
-        >
-          {weatherOptions.map((opt) => (
-            <MenuItem key={opt.value} value={opt.value}>
-              {opt.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
     </div>
   );
 };

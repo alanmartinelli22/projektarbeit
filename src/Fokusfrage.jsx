@@ -13,7 +13,14 @@ export const Fokusfrage = () => {
       <div className="pageIntro">
         <Typography variant="body1">
           Wann gibt es an der Bahnhofstrasse Nord mehr erwachsene Fussgänger in
-          Richtung LTR als in Richtung RTL
+          Richtung LTR als in Richtung RTL?
+        </Typography>
+
+        <Typography variant="body2">
+          Vormittags ist die Differenz meist positiv: In Richtung LTR werden
+          mehr Erwachsene gezählt als in Richtung RTL. Am Nachmittag kippt das
+          Muster: Zwischen etwa 14 und 21 Uhr überwiegt häufig die Richtung RTL.
+          Die grössten Abweichungen treten in den Hauptverkehrszeiten auf.
         </Typography>
       </div>
 
