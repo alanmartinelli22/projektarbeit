@@ -1,17 +1,21 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import teildatensatz from "./assets/Teildatensatz.json";
 
 const messpunkte = [
-  { id: 329, name: "Bahnhofstrasse (Mitte)", coords: [47.3729, 8.5377] },
-  { id: 331, name: "Bahnhofstrasse (Nord)", coords: [47.376, 8.5388] },
-  { id: 330, name: "Bahnhofstrasse (Süd)", coords: [47.3694, 8.5383] },
+  { id: 331, name: "Bahnhofstrasse (Nord)", coords: [47.375465, 8.539143] },
+  { id: 329, name: "Bahnhofstrasse (Mitte)", coords: [47.372007, 8.538433] },
+  { id: 330, name: "Bahnhofstrasse (Süd)", coords: [47.368568, 8.539722] },
+  { id: 670, name: "Lintheschergasse", coords: [47.37538, 8.538287] },
 ];
+
+function streetViewLink(lat, lon) {
+  return `https://www.google.com/maps?layer=c&cbll=${lat},${lon}`;
+}
 
 export const Map = () => {
   return (
     <div style={{ height: "60vh", width: "100%", marginTop: "1.5rem" }}>
       <MapContainer
-        center={[47.3737, 8.5385]}
+        center={[47.3729, 8.5388]}
         zoom={16}
         scrollWheelZoom={false}
         style={{ height: "100%", width: "100%" }}
@@ -21,22 +25,21 @@ export const Map = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {messpunkte.map((p) => {
-          const rows = teildatensatz.filter((d) => d.location_id === p.id);
-          const first = rows[0];
-
-          return (
-            <Marker key={p.id} position={p.coords}>
-              <Popup>
-                <strong>{p.name}</strong>
-                <br />
-                Beispielstunde: {first?.timestamp}
-                <br />
-                Fussgänger gesamt: {first?.pedestrians_count}
-              </Popup>
-            </Marker>
-          );
-        })}
+        {messpunkte.map((p) => (
+          <Marker key={p.id} position={p.coords}>
+            <Popup>
+              <strong>{p.name}</strong>
+              <br />
+              <a
+                href={streetViewLink(p.coords[0], p.coords[1])}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Street View öffnen
+              </a>
+            </Popup>
+          </Marker>
+        ))}
       </MapContainer>
     </div>
   );
