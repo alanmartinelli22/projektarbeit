@@ -18,10 +18,7 @@
         "orient": "top"
       },
       "scale": {
-        "range": [
-          "#1a9850",
-          "#d73027"
-        ]
+        "range": ["#1a9850", "#d73027"]
       },
       "title": "Wer ist gr\u00f6sser",
       "type": "nominal"
