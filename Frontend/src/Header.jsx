@@ -1,12 +1,18 @@
 import { Box, Stack, Typography, ButtonGroup, Button } from "@mui/material";
 import logo from "./assets/fhnw_logo.png";
 
+// Definiert die verfügbaren Seiten für die Navigation
+const pages = [
+  { key: "start", label: "Einführung" },
+  { key: "fokusfrage", label: "Fokusfrage" },
+  { key: "explore", label: "Explore" },
+];
+
 export const Header = ({ page, setPage }) => {
-  const pages = [
-    { key: "start", label: "Einführung" },
-    { key: "fokusfrage", label: "Fokusfrage" },
-    { key: "explore", label: "Explore" },
-  ];
+  // Wechselt die Seite im Hauptzustand der App
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
 
   return (
     <Box
@@ -22,7 +28,7 @@ export const Header = ({ page, setPage }) => {
         gap: 2,
       }}
     >
-      {/* LOGO + TITOLO */}
+      {/* Logo und Titel der Applikation */}
       <Box sx={{ display: "flex", alignItems: "center", gap: 5 }}>
         <img
           src={logo}
@@ -35,27 +41,32 @@ export const Header = ({ page, setPage }) => {
         </Typography>
       </Box>
 
-      {/* BOTTONI DINAMICI */}
+      {/* Navigations-Buttons */}
       <Stack direction="row" alignItems="center">
         <ButtonGroup>
-          {pages.map((p) => (
-            <Button
-              key={p.key}
-              onClick={() => setPage(p.key)}
-              sx={{
-                backgroundColor: page === p.key ? "black" : "#eee333",
-                color: page === p.key ? "#eee333" : "black",
-                border: "1px solid black",
-                fontWeight: "bold",
-                "&:hover": {
-                  backgroundColor: "black",
-                  color: "#eee333",
-                },
-              }}
-            >
-              {p.label}
-            </Button>
-          ))}
+          {pages.map((p) => {
+            const isActive = page === p.key;
+
+            return (
+              <Button
+                key={p.key}
+                onClick={() => handlePageChange(p.key)}
+                aria-current={isActive ? "page" : undefined}
+                sx={{
+                  backgroundColor: isActive ? "black" : "#eee333",
+                  color: isActive ? "#eee333" : "black",
+                  border: "1px solid black",
+                  fontWeight: "bold",
+                  "&:hover": {
+                    backgroundColor: "black",
+                    color: "#eee333",
+                  },
+                }}
+              >
+                {p.label}
+              </Button>
+            );
+          })}
         </ButtonGroup>
       </Stack>
     </Box>
