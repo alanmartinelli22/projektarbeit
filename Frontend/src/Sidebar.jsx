@@ -37,17 +37,18 @@ export const Sidebar = ({
         Filter
       </Typography>
 
-      <FormControl fullWidth sx={{ mb: 2 }}>
-        <TextField
-          label="Datum"
-          type="date"
-          slotProps={{
-            inputLabel: { shrink: true },
+      <Typography variant="subtitle1" gutterBottom>
+        Datum
+      </Typography>
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DateCalendar
+          value={date ? dayjs(date) : null}
+          onChange={(newValue) => {
+            setDate(newValue ? newValue.format("YYYY-MM-DD") : "");
           }}
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
         />
-      </FormControl>
+      </LocalizationProvider>
 
       <FormControl fullWidth sx={{ mb: 2 }}>
         <InputLabel id="location-label">Standort</InputLabel>

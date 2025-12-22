@@ -1,5 +1,6 @@
 import { Box, Stack, Typography, ButtonGroup, Button } from "@mui/material";
 import logo from "./assets/fhnw_logo.png";
+
 export const Header = ({ page, setPage }) => {
   const pages = [
     { key: "start", label: "Einführung" },
