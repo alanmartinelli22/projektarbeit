@@ -10,6 +10,8 @@ import Checkbox from "@mui/material/Checkbox";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 
+// Feste Auswahlmöglichkeiten für die Standorte
+// (könnten später auch vom Backend geladen werden)
 const locationOptions = [
   { value: "Bahnhofstrasse (Nord)", label: "Bahnhofstrasse (Nord)" },
   { value: "Bahnhofstrasse (Mitte)", label: "Bahnhofstrasse (Mitte)" },
@@ -17,6 +19,9 @@ const locationOptions = [
   { value: "Lintheschergasse", label: "Lintheschergasse" },
 ];
 
+// Sidebar-Komponente für alle Filtereinstellungen
+// Die Sidebar verwaltet selbst keine Daten,
+// sondern ändert den State in der Explore-Komponente
 export const Sidebar = ({
   date,
   setDate,
@@ -33,10 +38,12 @@ export const Sidebar = ({
 }) => {
   return (
     <div>
+      {/* Titel des Filterbereichs */}
       <Typography variant="h6" gutterBottom>
         Filter
       </Typography>
 
+      {/* Datumsfilter */}
       <FormControl fullWidth sx={{ mb: 2 }}>
         <TextField
           label="Datum"
@@ -49,6 +56,7 @@ export const Sidebar = ({
         />
       </FormControl>
 
+      {/* Standort-Auswahl */}
       <FormControl fullWidth sx={{ mb: 2 }}>
         <InputLabel id="location-label">Standort</InputLabel>
         <Select
@@ -67,6 +75,7 @@ export const Sidebar = ({
 
       <Divider sx={{ my: 2 }} />
 
+      {/* Auswahl der Personenkategorien */}
       <FormGroup sx={{ mb: 2 }}>
         <Typography variant="subtitle1">Personen</Typography>
         <FormControlLabel
@@ -91,6 +100,7 @@ export const Sidebar = ({
 
       <Divider sx={{ my: 2 }} />
 
+      {/* Auswahl der Bewegungsrichtung */}
       <FormControl fullWidth sx={{ mb: 2 }}>
         <InputLabel id="direction-label">Richtung</InputLabel>
         <Select
@@ -105,6 +115,8 @@ export const Sidebar = ({
       </FormControl>
 
       <Divider sx={{ my: 2 }} />
+
+      {/* Button zum Starten der Explore-Abfrage */}
       <Button variant="contained" fullWidth onClick={onRun} disabled={loading}>
         GRAFIK ERSTELLEN
       </Button>

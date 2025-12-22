@@ -2,17 +2,19 @@ from datetime import date as dt_date
 from pathlib import Path
 from typing import Optional
 
-import numpy as np
 import pandas as pd
-import altair as alt
-from fastapi import FastAPI, Query
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+# Basisverzeichnis der Applikation
 BASE_DIR = Path(__file__).parent
+# Pfad zur CSV-Datei mit den Messdaten
 DATA_PATH = BASE_DIR / "Gesamtdatensatz.csv"
 
+# Erstellen der FastAPI-Applikation
 app = FastAPI(title="Projektarbeit API")
 
+# CORS-Konfiguration: erlaubt Zugriff vom React-Frontend (localhost:5173)
 app.add_middleware(
     CORSMiddleware,
     # Zugriff von React regeln
@@ -21,22 +23,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Zeitstempel in Datetime umwandeln
+# CSV-Daten einmalig beim Start des Servers einlesen
 DF = pd.read_csv(DATA_PATH)
-DF["timestamp"] = pd.to_datetime(DF["timestamp"])
 
+# Zeitstempel vorbereiten für Filter und Aggregationen
+DF["timestamp"] = pd.to_datetime(DF["timestamp"])
 DF["date"] = DF["timestamp"].dt.date
 DF["hour"] = DF["timestamp"].dt.hour
 
-# leere Zellen ohne Werte im ganzen Datensatz in None umwandeln
-DF = DF.where(pd.notnull(DF), None)
 
-
-# Endpunkte definieren@app.get("/")
+# Root-Endpoint: einfacher Health-Check des Backends
+@app.get("/")
 def root():
     return {"status": "ok", "rows": len(DF)}
 
-
+# Liefert alle verfügbaren Locations (REST-Ressource)
 @app.get("/api/locations")
 def locations():
     if "location_id" in DF.columns and "location_name" in DF.columns:
@@ -48,15 +49,18 @@ def locations():
         return df_loc.to_dict(orient="records")
     return []
 
-#Richiesta per fokusfrage
-
+# Fokusfrage: Aggregierte Daten pro Stunde für eine bestimmte Location
+# Path-Parameter: location_id identifiziert die Location
 @app.get("/api/locations/{location_id}/focus")
 def focus(location_id: int):
+    # Feste Untersuchungsdatum für die Fokusfrage
     target_date = dt_date(2024, 8, 10)
 
+    # Filtern nach Location und Datum
     df_loc = DF[DF["location_id"] == location_id].copy()
     df_day = df_loc[df_loc["date"] == target_date].copy()
-
+    
+    # Aggregation pro Stunde (Summe der Passanten)
     df_group = (
         df_day.groupby("hour")
         .agg(
@@ -66,45 +70,43 @@ def focus(location_id: int):
         .reset_index()
         .sort_values("hour")
     )
-
+    
+    # Differenz zwischen LTR und RTL
     df_group["delta"] = (
         df_group["adult_ltr_pedestrians_count"]
         - df_group["adult_rtl_pedestrians_count"]
     )
-
-    df_group["winner"] = np.where(df_group["delta"] > 0, "LTR", "RTL")
+    
+    # Gewinner-Richtung pro Stunde bestimmen
+    df_group["winner"] = df_group["delta"].apply(
+    lambda x: "LTR" if x > 0 else "RTL"
+)
 
     return df_group.to_dict(orient="records")
 
 
-#Richiesta per explore
-
+# Explore-Endpoint: Aggregierte Daten pro Stunde für interaktive Exploration
+# Query-Parameter: date und location_name dienen als Filter
 @app.get("/api/explore/chart")
 def explore_chart(
     date: Optional[str] = None,
     location_name: Optional[str] = None,
-    adults: bool = True,
-    children: bool = True,
-    direction: str = "LTR",
 ):
     df = DF.copy()
-
+    # Optionaler Filter nach Location
     if location_name and "location_name" in df.columns:
         df = df[df["location_name"] == location_name]
-
+    
+    # Optionaler Filter nach Datum
     if date:
         target_date = pd.to_datetime(date).date()
         df = df[df["date"] == target_date]
 
+    # Spaltennamen aus dem CSV
     adult_ltr = "adult_ltr_pedestrians_count"
     adult_rtl = "adult_rtl_pedestrians_count"
     child_ltr = "child_ltr_pedestrians_count"
     child_rtl = "child_rtl_pedestrians_count"
-
-    required = [adult_ltr, adult_rtl, child_ltr, child_rtl]
-    missing = [c for c in required if c not in df.columns]
-    if missing:
-        return {"error": "Missing columns in CSV", "missing": missing}
 
     df_hour = (
         df.groupby("hour")
@@ -118,80 +120,17 @@ def explore_chart(
         .sort_values("hour")
     )
 
-    all_hours = pd.DataFrame({"hour": list(range(24))})
-    df_hour = all_hours.merge(df_hour, on="hour", how="left").fillna(0)
+    # Umwandlung in JSON-kompatibles Format
+    result = []
 
-    rows = []
+    for _, r in df_hour.iterrows():
+        result.append({
+            "hour": int(r["hour"]),
+            "adult_ltr": int(r["adult_ltr"]),
+            "adult_rtl": int(r["adult_rtl"]),
+            "child_ltr": int(r["child_ltr"]),
+            "child_rtl": int(r["child_rtl"]),
+        })
 
-    if direction == "LTR":
-        if adults:
-            for _, r in df_hour.iterrows():
-                rows.append(
-                    {
-                        "hour": int(r["hour"]),
-                        "person": "Erwachsene",
-                        "count": int(r["adult_ltr"]),
-                    }
-                )
-        if children:
-            for _, r in df_hour.iterrows():
-                rows.append(
-                    {
-                        "hour": int(r["hour"]),
-                        "person": "Kinder",
-                        "count": int(r["child_ltr"]),
-                    }
-                )
+    return result
 
-    if direction == "RTL":
-        if adults:
-            for _, r in df_hour.iterrows():
-                rows.append(
-                    {
-                        "hour": int(r["hour"]),
-                        "person": "Erwachsene",
-                        "count": int(r["adult_rtl"]),
-                    }
-                )
-        if children:
-            for _, r in df_hour.iterrows():
-                rows.append(
-                    {
-                        "hour": int(r["hour"]),
-                        "person": "Kinder",
-                        "count": int(r["child_rtl"]),
-                    }
-                )
-
-    chart_df = pd.DataFrame(rows)
-
-    if chart_df.empty:
-        empty_spec = {
-            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-            "description": "No data",
-            "data": {"values": []},
-            "mark": "bar",
-        }
-        return {"chart": empty_spec}
-
-    chart = (
-        alt.Chart(chart_df)
-        .mark_bar()
-        .encode(
-            x=alt.X("hour:O", title="Stunde"),
-            y=alt.Y("sum(count):Q", title="Anzahl"),
-            color=alt.Color("person:N", title="Personen"),
-            tooltip=[
-                alt.Tooltip("hour:O", title="Stunde"),
-                alt.Tooltip("person:N", title="Person"),
-                alt.Tooltip("sum(count):Q", title="Anzahl"),
-            ],
-        )
-        .properties(
-            width=600,
-            height=320,
-            title=f"Explore {direction}",
-        )
-    )
-
-    return {"chart": chart.to_dict()}
