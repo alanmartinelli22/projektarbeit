@@ -8,6 +8,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
 
 const locationOptions = [
   { value: "Bahnhofstrasse (Nord)", label: "Bahnhofstrasse (Nord)" },
@@ -25,10 +26,10 @@ export const Sidebar = ({
   setShowAdults,
   showChildren,
   setShowChildren,
-  showLTR,
-  setShowLTR,
-  showRTL,
-  setShowRTL,
+  direction,
+  setDirection,
+  onRun,
+  loading,
 }) => {
   return (
     <div>
@@ -88,27 +89,25 @@ export const Sidebar = ({
         />
       </FormGroup>
 
-      <FormGroup sx={{ mb: 2 }}>
-        <Typography variant="subtitle1">Richtung</Typography>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showLTR}
-              onChange={(e) => setShowLTR(e.target.checked)}
-            />
-          }
-          label="LTR"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={showRTL}
-              onChange={(e) => setShowRTL(e.target.checked)}
-            />
-          }
-          label="RTL"
-        />
-      </FormGroup>
+      <Divider sx={{ my: 2 }} />
+
+      <FormControl fullWidth sx={{ mb: 2 }}>
+        <InputLabel id="direction-label">Richtung</InputLabel>
+        <Select
+          labelId="direction-label"
+          label="Richtung"
+          value={direction}
+          onChange={(e) => setDirection(e.target.value)}
+        >
+          <MenuItem value="LTR">LTR</MenuItem>
+          <MenuItem value="RTL">RTL</MenuItem>
+        </Select>
+      </FormControl>
+
+      <Divider sx={{ my: 2 }} />
+      <Button variant="contained" fullWidth onClick={onRun} disabled={loading}>
+        GRAFIK ERSTELLEN
+      </Button>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { VegaEmbed } from "react-vega";
-import fokusfrageBase from "./json_spec/fokusfrage.json";
+import fokusfrage from "./json_spec/fokusfrage.json";
 
 export const FokusChart = () => {
   const [spec, setSpec] = useState(null);
@@ -12,7 +12,7 @@ export const FokusChart = () => {
         console.log("Dati backend Fokusfrage:", json);
 
         const newSpec = {
-          ...fokusfrageBase,
+          ...fokusfrage,
           data: {
             values: json, // qui inseriamo i dati del backend
           },

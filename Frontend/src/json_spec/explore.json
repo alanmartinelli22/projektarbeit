@@ -1,0 +1,18 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Explore Diagramm",
+  "width": "container",
+  "height": 320,
+  "mark": "bar",
+  "encoding": {
+    "x": { "field": "hour", "type": "ordinal", "title": "Stunde" },
+    "y": { "field": "count", "type": "quantitative", "title": "Anzahl" },
+    "color": { "field": "person", "type": "nominal", "title": "Personen" },
+    "tooltip": [
+      { "field": "hour", "type": "ordinal", "title": "Stunde" },
+      { "field": "direction", "type": "nominal", "title": "Richtung" },
+      { "field": "person", "type": "nominal", "title": "Person" },
+      { "field": "count", "type": "quantitative", "title": "Anzahl" }
+    ]
+  }
+}
